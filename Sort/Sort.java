@@ -84,4 +84,56 @@ public class Sort {
         }
     }
 
+
+    //创建堆
+    public static void createHeap(int[] a, int n, int h) {
+        int i, j, flag;
+        int temp;
+
+        i = h;          //i 为要建堆的二叉树根节点下标;
+        j = 2 * i + 1;  //j 为 i 结点的左孩子结点的下标;
+        temp = a[i];
+        flag = 0;
+
+        //沿左右孩子中值较大者重复向下筛选
+        while(j < n && flag != 1) {
+            //寻找左右孩子结点中的较大者，j为其下标
+            if(j < n - 1 && a[j] < a[j+1]) {
+                j++;
+            }
+            if(temp > a[j]) {
+                flag = 1;
+            }else {
+                a[i] = a[j];
+                i = j;
+                j = 2 * i + 1;
+            }
+        }
+        a[i] = temp;
+    }
+
+    //初始化最大堆算法
+    public static void initCreateHeap(int[] a) {
+        int n = a.length;
+        for(int i = (n - 1) / 2; i >= 0; i--) {
+            createHeap(a, n, i);
+        }
+    }
+
+    //堆排序算法
+    public static void heapSort(int[] a) {
+        int temp;
+        int n = a.length;
+
+        initCreateHeap(a);
+
+        for(int i = n - 1; i > 0; i--) {
+            temp = a[0];
+            a[0] = a[i];
+            a[i] = temp;
+
+            createHeap(a, i, 0);
+        }
+    }
+
 }
