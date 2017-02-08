@@ -39,4 +39,49 @@ public class Sort {
             }
         }
     }
+
+//不稳定直接选择排序
+    public static void selectSort(int[] a) {
+        int i, j, small;
+        int temp;
+        int n = a.length;
+
+        for(i = 0; i < n - 1; i++) {
+            small = i;
+            for(j = i + 1; j < n; j++) {
+                if(a[j] <a[small]) {
+                    small = j;
+                }
+                if(small != i) {
+                    temp = a[i];
+                    a[i] = a[small];
+                    a[small] = temp;
+                }
+            }
+        }
+    }
+
+//稳定直接选择排序
+    public static void selectSort2(int[] a) {
+        int i, j ,small;
+        int temp;
+        int n = a.length;
+
+        for(i = 0; i < n - 1; i++) {
+            small = i;
+            for(j = i + 1; j < n; j++) {
+                if(a[j] < a[small]) {
+                    small = j;
+                }
+            }
+            if(small != i) {
+                temp = a[small];
+                for(j = small; j > i; j--) {
+                    a[j] = a[j-1];
+                }
+                a[i] = temp;
+            }
+        }
+    }
+
 }
