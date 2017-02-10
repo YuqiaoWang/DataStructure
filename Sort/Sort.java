@@ -136,4 +136,93 @@ public class Sort {
         }
     }
 
+    //冒泡排序
+    public static void bubbleSort(int[] a) {
+        int i, j, flag = 1;
+        int temp;
+        int n = a.length;
+
+        for(i = 1; i < n && flag == 1; i ++) {
+            flag = 0;       //为了提前结束排序算法
+            for(j = 0; j < n - 1; j++) {
+                if(a[j] > a[j + 1]) {
+                    flag = 1;
+                    temp = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    //快速排序
+    public static void quickSort(int[] a, int low, int high) {
+        int i, j;
+        int temp;
+        i = low;
+        j = high;
+        temp = a[low];
+
+        while(i < j) {
+            //在数组右端扫描
+            while(i < j && temp <= a[j]) {
+                j--;
+            }
+            if(i < j) {
+                a[i] = a[j];
+                i++;
+            }
+
+            //在数组左端扫描
+            while(i < j && a[i] < temp) {
+                i++;
+            }
+            if(i < j) {
+                a[j] =a[i];
+                j--;
+            }
+        }
+        a[i] = temp;
+
+        if(low < i) quickSort(a, low, i - 1);
+        if(i < high) quickSort(a, j + 1, high);
+    }
+
+    //基数排序
+    public static void radixSort(int[] a, int m, int d) throws Exception {
+        //d 为进制的基数，m 为数据元素的最大位数
+        int n = a.length;
+        int i, j, k, l, power = 1;
+        LinQueue[] myQueque = new LinQueue[d];
+
+        //创建链式队列数组对象
+        for(i = 0; i < d; i++) {
+            LinQueue temp = new LinQueue();
+            myQueue[i] = temp;
+        }
+        //进行m次排序
+        for(i= 0；i < m; i++) {
+            if(i == 0) {
+                power = 1;
+            }else {
+                power = power * d;
+            }
+
+            //依次将n个数据元素按第k位的大小放到相应的队列中
+            for(j = 0; j < n; j++) {
+                k = a[j] / power - (a[j] / (power * d)) * d; //计算k值
+                myQueque[k].append(new Interger(a[j]));
+            }
+
+            //顺序回收各队列中的数据元素到数组a中
+            l = 0;
+            for(j = 0; j < d; j++) {
+                while(myQueque[j].notEmpty()) {
+                    a[l] = ((Integer)myQueque[j].delete()).intValue();
+                    l++;
+                }
+            }
+        }
+    }
+
 }
